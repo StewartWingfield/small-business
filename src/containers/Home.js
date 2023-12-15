@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import Navigation from "../components/Navigation";
 
 const mapStateToProps = (state) => {
   return {
@@ -6,4 +7,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Listings);
+export default connect(mapStateToProps)(Navigation);
