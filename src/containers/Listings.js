@@ -1,5 +1,7 @@
 import { connect } from "react-redux";
-import Listings from "../components/Listings";
+import Navigation from "../components/Navigation";
+
+import { removeCar } from "../redux/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -7,4 +9,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Listings);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeListing: (index) => dispatch(removeListing(index)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
