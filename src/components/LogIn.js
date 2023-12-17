@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
 import cookie from "cookie";
 
-const Login = () => {
+const LogIn = (props) => {
   const navigate = useNavigate();
-
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -22,8 +21,11 @@ const Login = () => {
   };
 
   const login = (e) => {
+    props.logInUser(state.username);
     e.preventDefault();
-    document.cookie = cookie.serialize("loggedIn", "true", { maxAge: 60 });
+    document.cookie = cookie.serialize("loggedIn", true, {
+      maxAge: 60 * 60,
+    });
 
     navigate("/");
   };
@@ -34,6 +36,7 @@ const Login = () => {
         <form className="login-form" onSubmit={login}>
           <TextField
             required
+            variant="standard"
             onChange={handleTextChange}
             value={state.username}
             name="username"
@@ -42,6 +45,7 @@ const Login = () => {
           />
           <TextField
             required
+            variant="standard"
             onChange={handleTextChange}
             value={state.password}
             name="password"
@@ -62,4 +66,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LogIn;

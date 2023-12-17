@@ -1,113 +1,117 @@
-import React, { Component, Fragment } from "react";
-import {
-  Button,
-  TextField,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@mui/material";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { TextField, Button, Container } from "@mui/material";
 
-class AddCar extends Component {
-  state = {
-    open: false,
+const AddListing = (props) => {
+  const navigate = useNavigate();
+  const [state, setState] = useState({
     name: "",
-    mpg: "",
-    cylinders: "",
-    horsepower: "",
+    address: "",
+    description: "",
+    hours: "",
+  });
+
+  const handleTextChange = (e) => {
+    const { name, value } = e.target;
+    setState((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
   };
 
-  toggleDialog = () => this.setState({ open: !this.state.open });
-
-  handleTextChange = (e) => {
-    const newState = { ...this.state };
-    newState[e.target.id] = e.target.value;
-    this.setState(newState);
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = { ...this.state };
-    payload.id = this.props.listingTotal + 1;
-    delete payload.open;
-    this.props.addListing(payload);
-    this.setState({ open: false });
-  };
+    console.log(`Add listing form submitted`);
+    console.log(state);
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.open !== this.state.open) {
-      this.setState({
-        name: "",
-        description: "",
-        address: "",
-        operatingHours: "",
-      });
+    let newId = 0;
+    console.log(props.businesses);
+    for (let item of props.businesses) {
+      if (item.id > newId) {
+        newId = item.id;
+      }
     }
+
+    newId++;
+    let newListing = {};
+    newListing["id"] = newId;
+    for (let item of Object.entries(state)) {
+      newListing[item[0]] = item[1];
+    }
+    props.createListing(newListing);
+    console.log(`creating new listing:`);
+    console.log(newListing);
+    navigate("/");
   };
 
-  render() {
-    return (
-      <Fragment>
-        <div style={{ textAlign: "center" }}>
-          <h1>Add Listing:</h1>
-          <Button
-            variant="contained"
-            className="add-car"
-            onClick={this.toggleDialog}
-          >
-            Add Car
-          </Button>
-        </div>
-        <div>
-          <Dialog open={this.state.open} onClose={this.toggleDialog}>
-            <DialogTitle>Add New Car</DialogTitle>
-            <DialogContent>
-              <form
-                onSubmit={this.handleSubmit}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "350px",
-                }}
-              >
-                <TextField
-                  id="name"
-                  placeholder="Name"
-                  value={this.state.name}
-                  onChange={this.handleTextChange}
-                  required
-                />
-                <TextField
-                  id="mpg"
-                  placeholder="Miles per gallon"
-                  value={this.state.mpg}
-                  onChange={this.handleTextChange}
-                  required
-                />
-                <TextField
-                  id="cylinders"
-                  placeholder="Cylinders"
-                  value={this.state.cylinders}
-                  onChange={this.handleTextChange}
-                  required
-                />
-                <TextField
-                  id="horsepower"
-                  placeholder="Horsepower"
-                  value={this.state.horsepower}
-                  onChange={this.handleTextChange}
-                  required
-                />
-                <br />
-                <Button variant="contained" color="primary" type="submit">
-                  Submit
-                </Button>
-              </form>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </Fragment>
-    );
-  }
-}
+  return (
+    <div>
+      {props.username && (
+        <div className="top-level-user">Logged in as: {props.username}</div>
+      )}
 
-export default AddCar;
+      <div className="l-r-container">
+        <div className="add-left">
+          <Container>
+            <form className="login-form" onSubmit={handleSubmit}>
+              <TextField
+                required
+                variant="standard"
+                className="add-inputs"
+                onChange={handleTextChange}
+                value={state.name}
+                name="name"
+                label="Name"
+                type="text"
+              />
+              <TextField
+                required
+                variant="standard"
+                className="add-inputs"
+                onChange={handleTextChange}
+                value={state.address}
+                name="address"
+                label="Address"
+                type="text"
+              />
+              <TextField
+                required
+                variant="standard"
+                className="add-inputs"
+                onChange={handleTextChange}
+                value={state.hours}
+                name="hours"
+                label="Hours"
+                type="text"
+              />
+              <TextField
+                required
+                multiline
+                variant="standard"
+                className="add-inputs"
+                onChange={handleTextChange}
+                value={state.description}
+                name="description"
+                label="Description"
+                type="text"
+              />
+
+              <Button
+                type="submit"
+                className="add"
+                variant="contained"
+                color="secondary"
+              >
+                Save
+              </Button>
+            </form>
+          </Container>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddListing;

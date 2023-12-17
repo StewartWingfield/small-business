@@ -2,10 +2,11 @@ import { combineReducers } from "redux";
 
 const listings = (state = [], action) => {
   switch (action.type) {
-    case "ADD_LISTING":
+    case "CREATE_LISTING":
       return [...state, action.value];
-    case "REMOVE_LISTING":
-      const newState = [...state];
+
+    case "DELETE_LISTING":
+      let newState = [...state];
       newState.splice(action.value, 1);
       return newState;
 
@@ -14,4 +15,17 @@ const listings = (state = [], action) => {
   }
 };
 
-export default combineReducers({ listings });
+const username = (state = "", action) => {
+  switch (action.type) {
+    case "LOG_IN_USER":
+      return action.value;
+
+    case "LOG_OUT_USER":
+      return "";
+
+    default:
+      return state;
+  }
+};
+
+export default combineReducers({ listings, username });

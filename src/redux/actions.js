@@ -1,7 +1,14 @@
-export const addListing = (listing) => {
+export const logInUser = (username) => {
   return {
-    type: "ADD_LISTING",
-    value: car,
+    type: "LOG_IN_USER",
+    value: username,
+  };
+};
+
+export const logOutUser = () => {
+  return {
+    type: "LOG_OUT_USER",
+    value: "",
   };
 };
 
@@ -9,5 +16,12 @@ export const deleteListing = (index) => {
   return {
     type: "DELETE_LISTING",
     value: index,
+  };
+};
+
+export const createListing = (listing) => {
+  return {
+    type: "CREATE_LISTING",
+    value: listing,
   };
 };

@@ -1,37 +1,38 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router";
-import cookie from "cookie";
-import AdminView from "./components/AdminView";
-import BizDetails from "./components/BizDetails";
-import LogIn from "./components/LogIn";
-import Home from "./containers/Home";
+import { Routes, Route } from "react-router";
+import Listings from "./containers/Listings";
+import Details from "./containers/Details";
+import LogIn from "./containers/LogIn";
+import Navigation from "./containers/Navigation";
 import AddListing from "./containers/AddListing";
+import { Link } from "react-router-dom";
+import cookie from "cookie";
 
 const checkAuth = () => {
   const cookies = cookie.parse(document.cookie);
-  console.log(cookies);
-  return cookies.loggedIn ? true : false;
+  return cookies["loggedIn"] ? true : false;
 };
 
 const ProtectedRoute = (props) => {
   const { component: Component, ...rest } = props;
 
-  return checkAuth() === true ? (
-    <Component {...rest} />
-  ) : (
-    <Navigate to="/login" />
-  );
+  return checkAuth() === true ? <Component {...rest} /> : <Link to="/login" />;
 };
 
 const Router = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home component={Home} />} />
-      <Route path="/details" element={<BizDetails />} />;
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/view" element={<ProtectedRoute component={AdminView} />} />
-      <Route path="/add" element={<ProtectedRoute component={AddListing} />} />
-    </Routes>
+    <>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Listings />} />
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route
+          path="/add"
+          element={<ProtectedRoute component={AddListing} />}
+        />
+      </Routes>
+    </>
   );
 };
 

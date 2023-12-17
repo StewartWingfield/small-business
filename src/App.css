@@ -18,31 +18,8 @@ ul {
   padding-inline-start: 20px;
 }
 
-.flex-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 50px 0;
-}
-
-.add-car {
-  background: #4caf50 !important;
-  color: white !important;
-}
-
-.icon {
-  font-size: medium !important;
-}
-
-.icon:hover {
-  cursor: pointer;
-}
-
 .text-gray {
   color: gray;
-}
-
-.text-red {
-  color: red;
 }
 
 .nav-list {
@@ -54,10 +31,80 @@ ul {
   margin: auto 20px;
 }
 
-.listing-container {
+.nav-list-item:hover {
+  cursor: pointer;
+}
+
+.car-container {
   margin: 50px;
 }
 
-.listing-paper {
+.car-paper {
   padding: 50px;
+}
+
+.details {
+  margin: 0 auto !important;
+  min-width: 400px;
+  max-width: 700px;
+  padding: 0 10px;
+}
+
+.top-level-user {
+  background-color: #d9d9d9;
+  color: #8c8c8c;
+  width: 100%;
+  height: 1.5rem;
+  padding-top: 0.25rem;
+  padding-left: 2rem;
+}
+
+table {
+  width: 83% !important;
+  margin: 2rem auto;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  gap: 15px;
+}
+
+.login-button {
+  background-color: #d9d9d9 !important;
+  color: black !important;
+}
+
+.text-red {
+  color: red;
+}
+.text-red:hover {
+  cursor: pointer;
+}
+
+#listingName {
+  text-decoration: underline;
+  font-size: 20px;
+}
+
+.l-r-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.add-left {
+  flex-grow: 1;
+}
+
+.add {
+  background-color: #5353c6 !important;
+  width: 50%;
+  padding: 5px !important;
+}
+
+.css-v4u5dn-MuiInputBase-root-MuiInput-root {
+  margin-top: 12px !important;
 }
